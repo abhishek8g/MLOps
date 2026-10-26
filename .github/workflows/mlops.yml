@@ -1,0 +1,39 @@
+name: Student Performance CI/CD
+
+on:
+  push:
+    branches:
+      -main
+
+jobs:
+  train-and-deploy:
+
+    run-on: ubuntu-latest
+
+    steps:
+
+      -name: Checkout Repository
+       uses: actions/checkout@v4
+
+      -name: Set up Python
+       uses: actions/setup-python@v5
+       with:
+       python-version "3.13.7"
+
+      
+      -name: inatall Dependencies
+       run:
+       pip install pandas
+       pip install scikit-learn
+       pip install joblib
+
+      -name: Run ML Pipelne
+       run: python Pipeline/run_pipeline.py
+
+      -name: Run Batch Prediction
+       run: python Batch_Prediction.py
+
+      -name: Deployment Completed
+       run: echo "Deployment Successful"
+
+      
